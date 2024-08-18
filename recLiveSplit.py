@@ -5,7 +5,7 @@ from datetime import datetime
 import time
 import json
 
-# Generate date
+# Generate date. Needs fixed, seems time too here.
 dateNow = datetime.now().strftime("%Y%m%d")
 
 # Prompt for the duration of each part (in minutes)
@@ -18,7 +18,7 @@ total_duration = (total_hours * 3600) + (total_minutes * 60)  # Convert to secon
 
 # Check if the correct number of arguments is provided
 if len(sys.argv) != 3:
-    print("Usage: python rec480split.py <RESOLUTION> <LIVE_STREAM_URL>")
+    print("Usage: python3 recLiveSplit.py <RESOLUTION> <LIVE_STREAM_URL>")
     sys.exit(1)
 
 # Assign arguments to variables to run the script
@@ -46,6 +46,7 @@ try:
     # Sanitize and limit the title to 64 characters
     yt_dlp_sanitize_command = [
     	"yt-dlp",
+    	"--cookies-from-browser", "chrome",
     	"--restrict-filenames",  # Ensure filename safety
     	"--windows-filenames",   # Force windows filename safety
     	"--get-filename",
@@ -58,7 +59,7 @@ try:
 
     # Output dir using channel name and date.
     # NOTE: CHANGE DIR TO WHERE YOU WANT DLs
-    base_output_dir = f"/<DIRECTORY>/<SUB_DIRECTORY/{channel_name}/{dateNow}"
+    base_output_dir = f"/home/anon/Videos/{channel_name}/{dateNow}"
     OUTPUT_DIR = base_output_dir
 
     # Find a unique directory name
@@ -95,7 +96,7 @@ try:
     while remaining_duration > 0:
         current_duration = min(remaining_duration, part_duration)
         timeNow = datetime.now().strftime("%H%M_%S")
-        output_file = os.path.join(OUTPUT_DIR, f"{part:03d}{sanitized_title}{dateNow}cet{timeNow}.mp4")
+        output_file = os.path.join(OUTPUT_DIR, f"{part:03d}{sanitized_title}{dateNow}_{timeNow}.mp4")
 
         # Command to record the live stream using ffmpeg
         ffmpeg_command = [
