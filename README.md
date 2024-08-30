@@ -7,3 +7,5 @@ do not use --cookies-from-browser
 (might get account / ip ban)
 
 work in progress
+
+Update 8/31/24: --cookies-from-browser NOT NEEDED, DO NOT USE! If you are getting the bot error still, change IP using VPN.
